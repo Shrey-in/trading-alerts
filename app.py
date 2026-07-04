@@ -8,7 +8,19 @@ app = Flask(__name__)
 def webhook():
     data = request.json
 
-    message = f"📈 TradingView Alert\n\n{data}"
+    symbol = data.get("symbol", "Unknown")
+    price = data.get("price", "Unknown")
+    action = data.get("action", "Unknown")
+    timeframe = data.get("timeframe", "Unknown")
+
+    message = f"""
+🚨 TradingView Alert
+
+📈 Symbol: {symbol}
+💰 Price: {price}
+📊 Action: {action}
+⏰ Timeframe: {timeframe}
+"""
 
     requests.post(
         f"https://api.telegram.org/bot{BOT_TOKEN}/sendMessage",
