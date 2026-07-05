@@ -12,14 +12,25 @@ def webhook():
     price = data.get("price", "Unknown")
     action = data.get("action", "Unknown")
     timeframe = data.get("timeframe", "Unknown")
+    exchange = data.get("exchange", "Unknown")
+    strategy = data.get("strategy", "Unknown")
+
+    if action.upper() == "BUY":
+        emoji = "🟢"
+    elif action.upper() == "SELL":
+        emoji = "🔴"
+    else:
+        emoji = "⚪"
 
     message = f"""
-🚨 TradingView Alert
+🚨 Trading Alert
 
-📈 Symbol: {symbol}
-💰 Price: {price}
-📊 Action: {action}
-⏰ Timeframe: {timeframe}
+{emoji} {action} {symbol}
+
+💰 Entry : {price}
+📈 Exchange : {exchange}
+⚙️ Strategy : {strategy}
+⏰ Timeframe : {timeframe}
 """
 
     requests.post(
